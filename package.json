@@ -1,0 +1,32 @@
+{
+  "name": "eclipse-cinema__server",
+  "version": "1.0.0",
+  "description": "Server application for \"Eclipse-cinema\"",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnneVerden/Eclipse-cinema__server.git"
+  },
+  "author": "EnneVerden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EnneVerden/Eclipse-cinema__server/issues"
+  },
+  "homepage": "https://github.com/EnneVerden/Eclipse-cinema__server#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.9.9",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
