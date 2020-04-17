@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Role = require("./role");
+const AuthenticationError = require("../errors/authentication");
 
 const Schema = mongoose.Schema;
 
@@ -32,9 +33,12 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
-  rolesId: {
-    type: Array,
-  },
+  rolesId: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "role",
+    },
+  ],
   moviesId: {
     type: Array,
     default: [],
@@ -50,7 +54,7 @@ UserSchema.pre("save", async function (next) {
   try {
     const defaultRole = await Role.findOne({ name: "user" });
 
-    return this.roleId.push(defaultRole._id);
+    return this.rolesId.push(defaultRole._id);
   } catch (error) {
     next(error);
   }
