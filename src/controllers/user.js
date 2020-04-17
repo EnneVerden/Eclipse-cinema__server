@@ -9,6 +9,12 @@ class UserController {
 
     res.status(201).send(toJSON({ users }));
   }
+
+  async removeUsers(req, res) {
+    const users = await User.removeUsers();
+
+    res.status(201).send(toJSON({ users }));
+  }
 }
 
 module.exports = UserController;

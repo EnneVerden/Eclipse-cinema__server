@@ -48,7 +48,7 @@ const UserSchema = new Schema({
   },
   accountStatus: {
     type: String,
-    enum: ["active", "deletion", "deleted"],
+    enum: ["active", "deletion"],
     default: "active",
   },
 });
