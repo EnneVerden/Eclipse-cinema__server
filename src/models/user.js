@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Role = require("./role");
 const Hash = require("../classes/hash");
+const InternalServerError = require("../errors/internal-server");
 
 const Schema = mongoose.Schema;
 const hash = new Hash().hash;
@@ -62,5 +63,13 @@ UserSchema.pre("save", async function (next) {
     next(error);
   }
 });
+
+UserSchema.methods.checkPassword = async function (password) {
+  try {
+    return await compare(password, this.password);
+  } catch (error) {
+    throw new InternalServerError("Internal server error!");
+  }
+};
 
 module.exports = mongoose.model("user", UserSchema);
