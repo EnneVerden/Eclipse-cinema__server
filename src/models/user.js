@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const Role = require("./role");
-const AuthenticationError = require("../errors/authentication");
+const Hash = require("../classes/hash");
 
 const Schema = mongoose.Schema;
+const hash = new Hash().hash;
+const compare = new Hash().compare;
 
 const UserSchema = new Schema({
   avatar: {
@@ -54,7 +56,8 @@ UserSchema.pre("save", async function (next) {
   try {
     const defaultRole = await Role.findOne({ name: "user" });
 
-    return this.rolesId.push(defaultRole._id);
+    this.rolesId.push(defaultRole._id);
+    this.password = await hash(this.password);
   } catch (error) {
     next(error);
   }
