@@ -4,6 +4,11 @@ const AuthenticationError = require("../errors/authentication");
 const User = new UserService();
 
 class AuthController {
+  async login(req, res) {
+    res.status(201).send(Object.assign(req.user, { password: "" }));
+    res.send();
+  }
+
   async registration(req, res) {
     const existingUser = await User.getUser({ email: req.body.email });
 
@@ -13,7 +18,13 @@ class AuthController {
 
     const user = await User.createUser(req.body);
 
-    res.status(201).send(Object.assign(user, { password: "" }));
+    await req.login(user, (error) => {
+      if (error) {
+        throw new AuthenticationError(error);
+      }
+
+      res.status(201).send(Object.assign(user, { password: "" }));
+    });
   }
 }
 

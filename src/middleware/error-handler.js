@@ -3,7 +3,6 @@ module.exports = (error, req, res, next) => {
     return next(error);
   }
 
-  console.log(error);
   return res.status(error.status || 500).send(
     JSON.stringify({
       error: { name: error.name, message: error.message, status: error.status },
