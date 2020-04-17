@@ -1,11 +1,19 @@
 const UserService = require("../services/user");
 const AuthenticationError = require("../errors/authentication");
+const toJSON = require("../methods/toJSON");
 
 const User = new UserService();
 
 class AuthController {
   async login(req, res) {
-    res.status(201).send(Object.assign(req.user, { password: "" }));
+    res.status(201).send(
+      toJSON({
+        auth: {
+          name: "Login",
+          user: Object.assign(req.user, { password: "" }),
+        },
+      })
+    );
     res.send();
   }
 
@@ -23,8 +31,23 @@ class AuthController {
         throw new AuthenticationError(error);
       }
 
-      res.status(201).send(Object.assign(user, { password: "" }));
+      res.status(201).send(
+        toJSON({
+          auth: {
+            name: "Registration",
+            user: Object.assign(user, { password: "" }),
+          },
+        })
+      );
     });
+  }
+
+  logout(req, res) {
+    req.logout();
+
+    res
+      .status(201)
+      .send(toJSON({ auth: { name: "Logout", message: "You are logout!" } }));
   }
 }
 

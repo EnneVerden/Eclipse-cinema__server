@@ -7,5 +7,6 @@ const Auth = new AuthController();
 
 router.post("/registration", errorCatcher(Auth.registration));
 router.post("/login", passport.authenticate("local"), errorCatcher(Auth.login));
+router.get("/logout", errorCatcher(Auth.logout));
 
 module.exports = router;
