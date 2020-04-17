@@ -8,6 +8,12 @@ class UserRepository {
   getUser(searchData) {
     return User.findOne(searchData).populate("rolesId", { _id: 0 });
   }
+
+  getUsers(searchData) {
+    return User.find(searchData)
+      .select({ password: 0 })
+      .populate("rolesId", { _id: 0 });
+  }
 }
 
 module.exports = UserRepository;

@@ -10,6 +10,10 @@ class UserService {
   async getUser(searchData) {
     return await User.getUser(searchData);
   }
+
+  async getUsers(searchData) {
+    return await User.getUsers(searchData);
+  }
 }
 
 module.exports = UserService;
