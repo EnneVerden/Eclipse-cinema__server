@@ -42,10 +42,12 @@ const UserSchema = new Schema({
       ref: "role",
     },
   ],
-  moviesId: {
-    type: Array,
-    default: [],
-  },
+  moviesId: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "movie",
+    },
+  ],
   accountStatus: {
     type: String,
     enum: ["active", "deletion"],

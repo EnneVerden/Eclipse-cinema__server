@@ -1,4 +1,5 @@
 const UserService = require("../services/user");
+const WrongDataError = require("../errors/wrong-data");
 const toJSON = require("../methods/toJSON");
 
 const User = new UserService();
@@ -11,13 +12,15 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    let userInfo = null;
+    let userInfo = await User.updateUserById(req.user, req.body);
 
-    await User.updateUserById(req.user, req.body);
+    if (userInfo === false) {
+      throw new WrongDataError("New password cannot match old password!");
+    }
 
     if (req.body.password) {
       userInfo = Object.assign(req.body, { password: "" });
-    } else {
+    } else if (req.body.firstName || req.body.lastName) {
       userInfo = req.body;
     }
 

@@ -1,13 +1,12 @@
 const Movie = require("../models/movie");
-const NotFoundError = require("../errors/not-found");
 
 class MovieRepository {
   getMovies(searchData) {
-    return Movie.find(searchData).populate("tagsId", { _id: 0 });
+    return Movie.find(searchData, { __v: 0 }).populate("tagsId");
   }
 
   getMovie(searchData) {
-    return Movie.findOne(searchData).populate("tagsId", { _id: 0 });
+    return Movie.findOne(searchData, { __v: 0 }).populate("tagsId");
   }
 
   createMovie(movie) {
