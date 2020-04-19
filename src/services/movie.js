@@ -10,6 +10,10 @@ class MovieService {
   async createMovie(data) {
     return await Movie.createMovie(data);
   }
+
+  async removeMovieById(id) {
+    return await Movie.removeMovie({ _id: id });
+  }
 }
 
 module.exports = MovieService;

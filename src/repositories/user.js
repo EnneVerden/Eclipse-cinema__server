@@ -19,12 +19,12 @@ class UserRepository {
     return User.find(searchData).select({ __v: 0, accountStatus: 0 });
   }
 
-  updateUser(searchData, dataForUpdating) {
+  updateUserById(searchData, dataForUpdating) {
     return User.updateMany(searchData, dataForUpdating);
   }
 
   removeUsers() {
-    return User.find({ accountStatus: "deletion" });
+    return User.remove({ accountStatus: "deletion" });
   }
 }
 

@@ -8,6 +8,10 @@ class MovieRepository {
   createMovie(movie) {
     return Movie.create(movie);
   }
+
+  removeMovie(searchData) {
+    return Movie.remove(searchData);
+  }
 }
 
 module.exports = MovieRepository;

@@ -10,5 +10,6 @@ router.use(isAuth);
 
 router.get("/", errorCatcher(Movie.getMovies));
 router.post("/", isAdmin, errorCatcher(Movie.createMovie));
+router.delete("/:id", isAdmin, errorCatcher(Movie.removeMovie));
 
 module.exports = router;
