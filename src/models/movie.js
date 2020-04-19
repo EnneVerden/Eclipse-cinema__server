@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Tag = require("../models/tag");
+const NotFoundError = require("../errors/not-found");
 
 const Schema = mongoose.Schema;
 
@@ -30,6 +31,14 @@ const MovieSchema = new Schema({
     type: Number,
     default: 0,
   },
+});
+
+MovieSchema.post("findOne", (error, doc, next) => {
+  if (error.name === "CastError") {
+    next(new NotFoundError("Movie not found!"));
+  } else {
+    next();
+  }
 });
 
 module.exports = mongoose.model("movie", MovieSchema);

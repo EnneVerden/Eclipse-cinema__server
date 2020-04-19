@@ -20,7 +20,7 @@ class UserService {
     return await User.getUsers(searchData);
   }
 
-  async updateUser(currentUser, data) {
+  async updateUserById(currentUser, data) {
     const user = await User.getUser({ _id: currentUser._id });
 
     if (data.password) {

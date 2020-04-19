@@ -13,7 +13,7 @@ class UserController {
   async updateUser(req, res) {
     let userInfo = null;
 
-    await User.updateUser(req.user, req.body);
+    await User.updateUserById(req.user, req.body);
 
     if (req.body.password) {
       userInfo = Object.assign(req.body, { password: "" });
