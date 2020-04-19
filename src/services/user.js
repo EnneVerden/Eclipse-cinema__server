@@ -17,6 +17,16 @@ class UserService {
     return await User.getUsers(searchData);
   }
 
+  async sendRemoveRequest(user) {
+    if (user.accountStatus === "active") {
+      await User.updateUser({ _id: user._id }, { accountStatus: "deletion" });
+      return { accountStatus: "deletion" };
+    } else if (user.accountStatus === "deletion") {
+      await User.updateUser({ _id: user._id }, { accountStatus: "active" });
+      return { accountStatus: "active" };
+    }
+  }
+
   async removeUsers() {
     const deletedUsers = await User.getDeletedUsers({
       accountStatus: "deletion",
