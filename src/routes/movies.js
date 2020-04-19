@@ -8,6 +8,7 @@ const Movie = new MovieController();
 
 router.use(isAuth);
 
+router.get("/", errorCatcher(Movie.getMovies));
 router.post("/", isAdmin, errorCatcher(Movie.createMovie));
 
 module.exports = router;
