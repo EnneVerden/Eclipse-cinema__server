@@ -1,8 +1,11 @@
 const UserRepository = require("../repositories/user");
 const DeletedUserRepository = require("../repositories/deletedUser");
+const Hash = require("../classes/hash");
 
 const User = new UserRepository();
 const DeletedUser = new DeletedUserRepository();
+const hash = new Hash().hash;
+const compare = new Hash().compare;
 
 class UserService {
   async createUser(userData) {
@@ -15,6 +18,24 @@ class UserService {
 
   async getUsers(searchData) {
     return await User.getUsers(searchData);
+  }
+
+  async updateUser(currentUser, data) {
+    const user = await User.getUser({ _id: currentUser._id });
+
+    if (data.password) {
+      const result = await compare(data.password, user.password);
+
+      if (result && Object.keys(data).length > 1) {
+        delete data.password;
+      } else if (result) {
+        return false;
+      } else {
+        data.password = await hash(data.password);
+      }
+    }
+
+    return await User.updateUser({ _id: currentUser._id }, data);
   }
 
   async sendRemoveRequest(user) {

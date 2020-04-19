@@ -10,6 +10,20 @@ class UserController {
     res.status(201).send(toJSON({ users }));
   }
 
+  async updateUser(req, res) {
+    let userInfo = null;
+
+    await User.updateUser(req.user, req.body);
+
+    if (req.body.password) {
+      userInfo = Object.assign(req.body, { password: "" });
+    } else {
+      userInfo = req.body;
+    }
+
+    res.status(201).send(toJSON(userInfo));
+  }
+
   async sendRemoveRequest(req, res) {
     const status = await User.sendRemoveRequest(req.user);
 

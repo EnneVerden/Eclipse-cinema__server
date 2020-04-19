@@ -9,6 +9,7 @@ const User = new UserController();
 router.use(isAuth);
 
 router.get("/", isAdmin, errorCatcher(User.getUsers));
+router.patch("/", errorCatcher(User.updateUser));
 router.delete("/", errorCatcher(User.sendRemoveRequest));
 router.delete("/all", isAdmin, errorCatcher(User.removeUsers));
 
