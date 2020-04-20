@@ -2,11 +2,11 @@ const Movie = require("../models/movie");
 
 class MovieRepository {
   getMovies(searchData) {
-    return Movie.find(searchData, { __v: 0 }).populate("tagsId");
+    return Movie.find(searchData, { __v: 0 }).populate("tagsId", { __v: 0 });
   }
 
   getMovie(searchData) {
-    return Movie.findOne(searchData, { __v: 0 }).populate("tagsId");
+    return Movie.findOne(searchData, { __v: 0 }).populate("tagsId", { __v: 0 });
   }
 
   createMovie(movie) {
@@ -14,11 +14,14 @@ class MovieRepository {
   }
 
   updateMovie(searchData, dataForUpdating) {
-    return Movie.updateOne(searchData, dataForUpdating);
+    return Movie.findOneAndUpdate(searchData, dataForUpdating, {
+      new: true,
+      fields: Object.keys(dataForUpdating),
+    });
   }
 
   removeMovie(searchData) {
-    return Movie.remove(searchData);
+    return Movie.findOneAndRemove(searchData);
   }
 }
 

@@ -17,9 +17,9 @@ class MovieController {
   }
 
   async updateMovie(req, res) {
-    await Movie.updateMovieById(req.params.id, req.body);
+    const movieInfo = await Movie.updateMovieById(req.params.id, req.body);
 
-    res.status(201).send(toJSON(req.body));
+    res.status(201).send(toJSON(movieInfo));
   }
 
   async removeMovie(req, res) {

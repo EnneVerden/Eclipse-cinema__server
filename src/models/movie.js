@@ -33,8 +33,16 @@ const MovieSchema = new Schema({
   },
 });
 
-MovieSchema.post("findOne", (error, doc, next) => {
-  if (error.name === "CastError") {
+MovieSchema.post("findOneAndUpdate", (error, res, next) => {
+  if (error.name === "CastError" && error.code === undefined) {
+    next(new NotFoundError("Movie not found!"));
+  } else {
+    next();
+  }
+});
+
+MovieSchema.post("findOneAndRemove", (error, res, next) => {
+  if (error.name === "CastError" && error.code === undefined) {
     next(new NotFoundError("Movie not found!"));
   } else {
     next();

@@ -9,6 +9,7 @@ exports.connect = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     });
 
     console.log("Successful connecting to database!");

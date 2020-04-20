@@ -1,4 +1,5 @@
 const MovieRepository = require("../repositories/movie");
+
 const Movie = new MovieRepository();
 
 class MovieService {
@@ -15,9 +16,7 @@ class MovieService {
   }
 
   async removeMovieById(id) {
-    const movie = await Movie.getMovie({ _id: id });
-
-    return await Movie.removeMovie({ _id: movie._id });
+    return await Movie.removeMovie({ _id: id });
   }
 }
 

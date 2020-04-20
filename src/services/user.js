@@ -16,60 +16,58 @@ class UserService {
   }
 
   async getUser(searchData) {
-    return await User.getUser(
-      searchData,
-      { __v: 0 },
-      {},
-      { tagsId: 0, description: 0, __v: 0 }
-    );
+    return await User.getUser(searchData);
   }
 
   async getUsers(searchData) {
-    return await User.getUsers(
-      searchData,
-      { password: 0, __iv: 0 },
-      {},
-      { tagsId: 0, description: 0, __v: 0 }
-    );
+    return await User.getUsers(searchData);
   }
 
-  async updateUserById(currentUser, data) {
+  async updateUser(user, data) {
     if (data.movieId) {
       const movie = await Movie.getMovie({ _id: data.movieId });
-      const user = await User.getUser({ _id: currentUser._id });
 
       if (user.moviesId.some((item) => item._id == data.movieId)) {
         throw new WrongDataError("You already have this movie!");
       }
 
-      await User.updateUser(
-        { _id: currentUser._id },
-        { moviesId: [...user.moviesId, data.movieId] }
-      );
+      await User.addUserMovie({ _id: user._id }, data.movieId);
+
+      return movie;
+    } else if (data.deletedMovie) {
+      const movie = await Movie.getMovie({ _id: data.deletedMovie });
+
+      if (!user.moviesId.some((item) => item._id == data.deletedMovie)) {
+        throw new WrongDataError("You don't have this movie!");
+      }
+
+      await User.removeUserMovie({ _id: user._id }, movie._id);
 
       return movie;
     } else if (data.password) {
-      const result = await compare(data.password, currentUser.password);
+      const result = await compare(data.password, user.password);
 
-      if (result && Object.keys(data).length > 1) {
+      if (result) {
         delete data.password;
-      } else if (result) {
-        return false;
       } else {
         data.password = await hash(data.password);
       }
 
-      return await User.updateUser({ _id: currentUser._id }, data);
+      return await User.updateUser({ _id: user._id }, data);
     }
   }
 
   async sendRemoveRequest(user) {
     if (user.accountStatus === "active") {
-      await User.updateUser({ _id: user._id }, { accountStatus: "deletion" });
-      return { accountStatus: "deletion" };
+      return await User.updateUser(
+        { _id: user._id },
+        { accountStatus: "deletion" }
+      );
     } else if (user.accountStatus === "deletion") {
-      await User.updateUser({ _id: user._id }, { accountStatus: "active" });
-      return { accountStatus: "active" };
+      return await User.updateUser(
+        { _id: user._id },
+        { accountStatus: "active" }
+      );
     }
   }
 

@@ -5,17 +5,16 @@ class UserRepository {
     return User.create(user);
   }
 
-  getUser(searchData, userLimit, rolesIdLimit, moviesIdLimit) {
-    return User.findOne(searchData, userLimit)
-      .populate("rolesId", rolesIdLimit)
-      .populate("moviesId", moviesIdLimit);
+  getUser(searchData) {
+    return User.findOne(searchData, { __v: 0 })
+      .populate("rolesId")
+      .populate("moviesId", { __v: 0 });
   }
 
-  getUsers(searchData, userLimit, rolesIdLimit, moviesIdLimit) {
-    return User.find(searchData, userLimit)
-      .select({ password: 0, __v: 0 })
-      .populate("rolesId", rolesIdLimit)
-      .populate("moviesId", moviesIdLimit);
+  getUsers(searchData) {
+    return User.find(searchData, { password: 0, __v: 0 })
+      .populate("rolesId")
+      .populate("moviesId", { tagsId: 0, description: 0, __v: 0 });
   }
 
   getDeletedUsers(searchData) {
@@ -23,7 +22,20 @@ class UserRepository {
   }
 
   updateUser(searchData, dataForUpdating) {
-    return User.updateMany(searchData, dataForUpdating);
+    return User.findOneAndUpdate(searchData, dataForUpdating, {
+      new: true,
+      fields: Object.keys(dataForUpdating).filter(
+        (field) => field !== "password"
+      ),
+    }).select({ _id: 0 });
+  }
+
+  addUserMovie(searchData, movieId) {
+    return User.updateOne(searchData, { $push: { moviesId: movieId } });
+  }
+
+  removeUserMovie(searchData, movieId) {
+    return User.updateOne(searchData, { $pull: { moviesId: movieId } });
   }
 
   removeUsers() {
