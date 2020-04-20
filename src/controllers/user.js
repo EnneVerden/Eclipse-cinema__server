@@ -34,6 +34,12 @@ class UserController {
 
     res.status(201).send(toJSON({ users }));
   }
+
+  async replenishBalance(req, res) {
+    const balance = await User.replenishBalance(req.user);
+
+    res.status(201).send(toJSON(balance));
+  }
 }
 
 module.exports = UserController;

@@ -11,6 +11,7 @@ router.use(isAuth);
 router.get("/", isAdmin, errorCatcher(User.getUsers));
 router.get("/orders", isAdmin, errorCatcher(User.getUsersMovies));
 router.patch("/", errorCatcher(User.updateUser));
+router.patch("/replenish", errorCatcher(User.replenishBalance));
 router.delete("/", errorCatcher(User.sendRemoveRequest));
 router.delete("/all", isAdmin, errorCatcher(User.removeUsers));
 

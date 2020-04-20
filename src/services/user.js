@@ -87,6 +87,13 @@ class UserService {
 
     return deletedUsersId;
   }
+
+  async replenishBalance(user) {
+    return await User.updateUser(
+      { _id: user._id },
+      { balance: user.balance + 5 }
+    );
+  }
 }
 
 module.exports = UserService;
