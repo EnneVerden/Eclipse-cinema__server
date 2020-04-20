@@ -1,12 +1,20 @@
 const MovieRepository = require("../repositories/movie");
+const TagRepository = require("../repositories/tag");
 
 const Movie = new MovieRepository();
+const Tag = new TagRepository();
 
 class MovieService {
   async getMovies(data) {
-    const { page, tag } = data;
+    const { page } = data;
+    let { tag } = data;
 
-    return await Movie.getMovies({ page, tag });
+    if (tag) {
+      tag = tag[0].toUpperCase() + tag.slice(1);
+      tag = await Tag.getTag({ name: tag });
+    }
+
+    return await Movie.getMovies({ page, tag: tag._id });
   }
 
   async createMovie(data) {

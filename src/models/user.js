@@ -12,11 +12,7 @@ const UserSchema = new Schema({
     type: String,
     default: "https://image.flaticon.com/icons/svg/236/236831.svg",
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
+  fullName: {
     type: String,
     required: true,
   },

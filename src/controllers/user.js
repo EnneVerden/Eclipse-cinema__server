@@ -1,5 +1,4 @@
 const UserService = require("../services/user");
-const WrongDataError = require("../errors/wrong-data");
 const toJSON = require("../methods/toJSON");
 
 const User = new UserService();
