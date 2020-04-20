@@ -42,7 +42,7 @@ const UserSchema = new Schema({
       ref: "role",
     },
   ],
-  moviesId: [
+  tickets: [
     {
       type: Schema.Types.ObjectId,
       ref: "movie",

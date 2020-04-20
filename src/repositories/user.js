@@ -8,17 +8,23 @@ class UserRepository {
   getUser(searchData) {
     return User.findOne(searchData, { __v: 0 })
       .populate("rolesId")
-      .populate("moviesId", { __v: 0 });
+      .populate("tickets", { __v: 0 });
   }
 
-  getUsers(searchData) {
+  getUsers(searchData, returnInfo) {
     return User.find(searchData, { password: 0, __v: 0 })
       .populate("rolesId")
-      .populate("moviesId", { tagsId: 0, description: 0, __v: 0 });
+      .populate("tickets", { tagsId: 0, description: 0, __v: 0 });
   }
 
   getDeletedUsers(searchData) {
     return User.find(searchData).select({ __v: 0, accountStatus: 0 });
+  }
+
+  getUsersMovies() {
+    return User.find()
+      .populate("tickets", "name poster startDate endDate")
+      .select("email avatar tickets");
   }
 
   updateUser(searchData, dataForUpdating) {
@@ -31,11 +37,11 @@ class UserRepository {
   }
 
   addUserMovie(searchData, movieId) {
-    return User.updateOne(searchData, { $push: { moviesId: movieId } });
+    return User.updateOne(searchData, { $push: { tickets: movieId } });
   }
 
   removeUserMovie(searchData, movieId) {
-    return User.updateOne(searchData, { $pull: { moviesId: movieId } });
+    return User.updateOne(searchData, { $pull: { tickets: movieId } });
   }
 
   removeUsers() {

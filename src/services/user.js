@@ -23,11 +23,15 @@ class UserService {
     return await User.getUsers(searchData);
   }
 
+  async getUsersMovies() {
+    return await User.getUsersMovies();
+  }
+
   async updateUser(user, data) {
     if (data.movieId) {
       const movie = await Movie.getMovie({ _id: data.movieId });
 
-      if (user.moviesId.some((item) => item._id == data.movieId)) {
+      if (user.tickets.some((item) => item._id == data.movieId)) {
         throw new WrongDataError("You already have this movie!");
       }
 
@@ -37,7 +41,7 @@ class UserService {
     } else if (data.deletedMovie) {
       const movie = await Movie.getMovie({ _id: data.deletedMovie });
 
-      if (!user.moviesId.some((item) => item._id == data.deletedMovie)) {
+      if (!user.tickets.some((item) => item._id == data.deletedMovie)) {
         throw new WrongDataError("You don't have this movie!");
       }
 

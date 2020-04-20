@@ -11,6 +11,12 @@ class UserController {
     res.status(201).send(toJSON({ users }));
   }
 
+  async getUsersMovies(req, res) {
+    const orders = await User.getUsersMovies();
+
+    res.status(201).send(toJSON(orders));
+  }
+
   async updateUser(req, res) {
     const userInfo = await User.updateUser(req.user, req.body);
 
