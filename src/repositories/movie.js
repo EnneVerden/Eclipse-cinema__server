@@ -2,7 +2,16 @@ const Movie = require("../models/movie");
 
 class MovieRepository {
   getMovies(searchData) {
-    return Movie.find(searchData, { __v: 0 }).populate("tagsId", { __v: 0 });
+    const moviesPerPage = 12;
+    const { page = 1, tag } = searchData;
+    let tagsExp;
+
+    if (tag) tagsExp = { tagsId: { $in: tag } };
+
+    return Movie.find(tagsExp, { __v: 0 })
+      .populate("tagsId", { __v: 0 })
+      .limit(moviesPerPage)
+      .skip((page - 1) * moviesPerPage);
   }
 
   getMovie(searchData) {

@@ -3,8 +3,10 @@ const MovieRepository = require("../repositories/movie");
 const Movie = new MovieRepository();
 
 class MovieService {
-  async getMovies(searchData) {
-    return await Movie.getMovies(searchData);
+  async getMovies(data) {
+    const { page, tag } = data;
+
+    return await Movie.getMovies({ page, tag });
   }
 
   async createMovie(data) {

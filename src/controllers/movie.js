@@ -5,9 +5,12 @@ const Movie = new MovieService();
 
 class MovieController {
   async getMovies(req, res) {
-    const movies = await Movie.getMovies();
+    const movies = await Movie.getMovies({
+      page: req.query.page,
+      tag: req.query.tag,
+    });
 
-    res.status(201).send(toJSON(movies));
+    res.status(201).send(movies);
   }
 
   async createMovie(req, res) {
