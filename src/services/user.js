@@ -35,7 +35,11 @@ class UserService {
         throw new WrongDataError("You already have this movie!");
       }
 
-      await User.addUserMovie({ _id: user._id }, data.movieId);
+      if (user.balance < movie.ticketPrice) {
+        throw new WrongDataError("You do not have enough funds!");
+      }
+
+      await User.addUserMovie({ _id: user._id }, movie, user.balance);
 
       return movie;
     } else if (data.deletedMovie) {

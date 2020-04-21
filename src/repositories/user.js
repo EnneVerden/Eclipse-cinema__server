@@ -36,8 +36,11 @@ class UserRepository {
     }).select({ _id: 0 });
   }
 
-  addUserMovie(searchData, movieId) {
-    return User.updateOne(searchData, { $push: { tickets: movieId } });
+  addUserMovie(searchData, movie, userBalance) {
+    return User.updateOne(searchData, {
+      $push: { tickets: movie._id },
+      balance: userBalance - movie.ticketPrice,
+    });
   }
 
   removeUserMovie(searchData, movieId) {
