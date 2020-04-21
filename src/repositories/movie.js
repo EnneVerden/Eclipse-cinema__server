@@ -6,16 +6,20 @@ class MovieRepository {
     const { page = 1, tag } = searchData;
     let tagsExp;
 
-    if (tag) tagsExp = { tagsId: { $in: tag } };
+    if (tag) tagsExp = { tags: { $in: tag } };
 
     return Movie.find(tagsExp, { __v: 0 })
-      .populate("tagsId", { __v: 0 })
+      .populate("tags", { __v: 0 })
       .limit(moviesPerPage)
       .skip((page - 1) * moviesPerPage);
   }
 
   getMovie(searchData) {
-    return Movie.findOne(searchData, { __v: 0 }).populate("tagsId", { __v: 0 });
+    return Movie.findOne(searchData, { __v: 0 }).populate("tags", { __v: 0 });
+  }
+
+  getMoviesForDeletion(searchData) {
+    return Movie.find(searchData);
   }
 
   createMovie(movie) {

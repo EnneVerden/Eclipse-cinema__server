@@ -7,14 +7,14 @@ class UserRepository {
 
   getUser(searchData) {
     return User.findOne(searchData, { __v: 0 })
-      .populate("rolesId")
+      .populate("roles")
       .populate("tickets", { __v: 0 });
   }
 
   getUsers(searchData, returnInfo) {
     return User.find(searchData, { password: 0, __v: 0 })
-      .populate("rolesId")
-      .populate("tickets", { tagsId: 0, description: 0, __v: 0 });
+      .populate("roles")
+      .populate("tickets", { tags: 0, description: 0, __v: 0 });
   }
 
   getDeletedUsers(searchData) {
@@ -22,7 +22,7 @@ class UserRepository {
   }
 
   getUsersMovies() {
-    return User.find()
+    return User.find({ tickets: { $exists: true, $ne: [] } })
       .populate("tickets", "name poster startDate endDate")
       .select("email avatar tickets");
   }

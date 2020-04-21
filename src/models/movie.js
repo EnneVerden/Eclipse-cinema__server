@@ -15,17 +15,17 @@ const MovieSchema = new Schema({
   description: {
     type: String,
   },
-  tagsId: [
+  tags: [
     {
       type: Schema.Types.ObjectId,
       ref: "tag",
     },
   ],
   startDate: {
-    type: String,
+    type: Date,
   },
   endDate: {
-    type: String,
+    type: Date,
   },
   ticketPrice: {
     type: Number,

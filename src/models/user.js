@@ -32,7 +32,7 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
-  rolesId: [
+  roles: [
     {
       type: Schema.Types.ObjectId,
       ref: "role",
@@ -55,7 +55,7 @@ UserSchema.pre("save", async function (next) {
   try {
     const defaultRole = await Role.findOne({ name: "user" });
 
-    this.rolesId.push(defaultRole._id);
+    this.roles.push(defaultRole._id);
     this.password = await hash(this.password);
   } catch (error) {
     next(error);

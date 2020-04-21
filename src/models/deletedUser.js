@@ -24,13 +24,13 @@ const DeletedUserSchema = new Schema({
   balance: {
     type: Number,
   },
-  rolesId: [
+  roles: [
     {
       type: Schema.Types.ObjectId,
       ref: "role",
     },
   ],
-  moviesId: {
+  tickets: {
     type: Array,
   },
   accountStatus: {

@@ -10,11 +10,12 @@ class MovieService {
     let { tag } = data;
 
     if (tag) {
-      tag = tag[0].toUpperCase() + tag.slice(1);
       tag = await Tag.getTag({ name: tag });
-    }
 
-    return await Movie.getMovies({ page, tag: tag._id });
+      return await Movie.getMovies({ page, tag: tag._id });
+    } else {
+      return await Movie.getMovies({ page });
+    }
   }
 
   async createMovie(data) {

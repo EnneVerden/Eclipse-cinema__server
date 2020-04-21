@@ -4,7 +4,7 @@ const InternalServerError = require("../errors/internal-server");
 module.exports = async (req, res, next) => {
   try {
     let isAdmin = false;
-    const roles = req.user.rolesId.map((role) => role.name);
+    const roles = req.user.roles.map((role) => role.name);
 
     isAdmin = roles.some((role) => role === "admin");
 

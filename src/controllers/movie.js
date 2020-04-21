@@ -10,7 +10,7 @@ class MovieController {
       tag: req.query.tag,
     });
 
-    res.status(201).send(movies);
+    res.status(201).send(toJSON(movies));
   }
 
   async createMovie(req, res) {
