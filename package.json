@@ -4,7 +4,8 @@
   "description": "Server application for \"Eclipse-cinema\"",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index"
+    "dev": "nodemon src/index",
+    "start": "node src/index"
   },
   "repository": {
     "type": "git",
