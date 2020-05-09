@@ -12,6 +12,7 @@ module.exports = (folder) => async (req, res, next) => {
       const filePath = path.resolve(folderPath, fileName);
 
       if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync("./uploads");
         fs.mkdirSync(folderPath);
       }
 
