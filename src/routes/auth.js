@@ -7,6 +7,7 @@ const validationSchema = require("../validation_schemas");
 
 const Auth = new AuthController();
 
+router.get("/", errorCatcher(Auth.authorization));
 router.post(
   "/registration",
   validator({ body: validationSchema.registration }),

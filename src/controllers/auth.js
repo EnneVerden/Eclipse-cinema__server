@@ -5,6 +5,25 @@ const toJSON = require("../methods/toJSON");
 const User = new UserService();
 
 class AuthController {
+  async authorization(req, res) {
+    let response = null;
+
+    if (req.user) {
+      response = Object.assign(req.user, { password: "" });
+    } else {
+      response = {};
+    }
+
+    res.status(201).send(
+      toJSON({
+        auth: {
+          name: "Authorization",
+          user: response,
+        },
+      })
+    );
+  }
+
   async login(req, res) {
     res.status(201).send(
       toJSON({
@@ -14,7 +33,6 @@ class AuthController {
         },
       })
     );
-    res.send();
   }
 
   async registration(req, res) {
