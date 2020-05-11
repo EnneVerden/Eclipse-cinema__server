@@ -11,6 +11,8 @@ module.exports = (expressApp) => {
         cookie: {
           maxAge: 1 * 24 * 60 * 60 * 1000,
           sameSite: true,
+          httpOnly: true,
+          secure: false,
         },
       })
     )
