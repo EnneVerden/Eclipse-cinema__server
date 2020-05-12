@@ -10,8 +10,6 @@ const resizer = require("../middleware/resizer");
 
 const Movie = new MovieController();
 
-router.use(isAuth);
-
 router.get(
   "/",
   validator({ query: validationSchema.getMovies }),
@@ -19,6 +17,7 @@ router.get(
 );
 router.post(
   "/",
+  isAuth,
   isAdmin,
   uploader("poster"),
   resizer("posters"),
@@ -27,6 +26,7 @@ router.post(
 );
 router.patch(
   "/:id",
+  isAuth,
   isAdmin,
   uploader("poster"),
   resizer("posters"),
@@ -35,6 +35,7 @@ router.patch(
 );
 router.delete(
   "/:id",
+  isAuth,
   isAdmin,
   validator({ params: validationSchema.id }),
   errorCatcher(Movie.removeMovie)
