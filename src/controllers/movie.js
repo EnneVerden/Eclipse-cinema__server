@@ -10,19 +10,19 @@ class MovieController {
       tag: req.query.tag,
     });
 
-    res.status(201).send(toJSON(movies));
+    res.status(201).send(toJSON({ movies }));
   }
 
   async createMovie(req, res) {
     const movie = await Movie.createMovie(req.body);
 
-    res.status(201).send(toJSON(movie));
+    res.status(201).send(toJSON({ movie }));
   }
 
   async updateMovie(req, res) {
     const movieInfo = await Movie.updateMovieById(req.params.id, req.body);
 
-    res.status(201).send(toJSON(movieInfo));
+    res.status(201).send(toJSON({ movie: movieInfo }));
   }
 
   async removeMovie(req, res) {

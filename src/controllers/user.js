@@ -13,19 +13,19 @@ class UserController {
   async getUsersMovies(req, res) {
     const orders = await User.getUsersMovies();
 
-    res.status(201).send(toJSON(orders));
+    res.status(201).send(toJSON({ orders }));
   }
 
   async updateUser(req, res) {
     const userInfo = await User.updateUser(req.user, req.body);
 
-    res.status(201).send(toJSON(userInfo));
+    res.status(201).send(toJSON({ userInfo }));
   }
 
   async sendRemoveRequest(req, res) {
     const status = await User.sendRemoveRequest(req.user);
 
-    res.status(201).send(toJSON(status));
+    res.status(201).send(toJSON({ status }));
   }
 
   async removeUsers(req, res) {
@@ -37,7 +37,7 @@ class UserController {
   async replenishBalance(req, res) {
     const balance = await User.replenishBalance(req.user);
 
-    res.status(201).send(toJSON(balance));
+    res.status(201).send(toJSON({ balance }));
   }
 }
 
