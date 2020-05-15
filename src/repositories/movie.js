@@ -11,8 +11,8 @@ class MovieRepository {
 
     return Movie.find(tagsExp, { __v: 0 })
       .populate("tags", { __v: 0 })
-      .limit(moviesPerPage)
-      .skip((page - 1) * moviesPerPage);
+      .limit(this.moviesPerPage)
+      .skip((page - 1) * this.moviesPerPage);
   }
 
   getPagesCount() {
