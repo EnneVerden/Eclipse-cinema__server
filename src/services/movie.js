@@ -5,6 +5,8 @@ const Movie = new MovieRepository();
 const Tag = new TagRepository();
 
 class MovieService {
+  moviesPerPage = 12;
+
   async getMovies(data) {
     const { page } = data;
     let { tag } = data;
@@ -16,6 +18,12 @@ class MovieService {
     } else {
       return await Movie.getMovies({ page });
     }
+  }
+
+  async getPagesCount() {
+    const pagesCount = await Movie.getPagesCount();
+
+    return Math.ceil(pagesCount / this.moviesPerPage);
   }
 
   async createMovie(data) {

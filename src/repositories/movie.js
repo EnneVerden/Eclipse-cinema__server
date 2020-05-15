@@ -1,8 +1,9 @@
 const Movie = require("../models/movie");
 
 class MovieRepository {
+  moviesPerPage = 12;
+
   getMovies(searchData) {
-    const moviesPerPage = 12;
     const { page = 1, tag } = searchData;
     let tagsExp;
 
@@ -12,6 +13,12 @@ class MovieRepository {
       .populate("tags", { __v: 0 })
       .limit(moviesPerPage)
       .skip((page - 1) * moviesPerPage);
+  }
+
+  getPagesCount() {
+    const moviesCount = Movie.countDocuments();
+
+    return moviesCount;
   }
 
   getMovie(searchData) {
