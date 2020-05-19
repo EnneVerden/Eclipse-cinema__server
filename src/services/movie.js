@@ -1,8 +1,6 @@
 const MovieRepository = require("../repositories/movie");
-const TagRepository = require("../repositories/tag");
 
 const Movie = new MovieRepository();
-const Tag = new TagRepository();
 
 class MovieService {
   moviesPerPage = 12;
@@ -12,9 +10,7 @@ class MovieService {
     let { tag } = data;
 
     if (tag) {
-      tag = await Tag.getTag({ name: tag });
-
-      return await Movie.getMovies({ page, tag: tag._id });
+      return await Movie.getMovies({ page, tag });
     } else {
       return await Movie.getMovies({ page });
     }
