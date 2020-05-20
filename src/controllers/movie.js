@@ -11,16 +11,14 @@ class MovieController {
     });
     const pagesCount = await Movie.getPagesCount();
 
-    res
-      .status(201)
-      .send(
-        toJSON({
-          movies,
-          pagesCount,
-          currentPage: page | 1,
-          currentTag: tag | null,
-        })
-      );
+    res.status(201).send(
+      toJSON({
+        movies,
+        pagesCount,
+        currentPage: req.query.page,
+        currentTag: req.query.tag,
+      })
+    );
   }
 
   async createMovie(req, res) {
