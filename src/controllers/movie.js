@@ -11,7 +11,9 @@ class MovieController {
     });
     const pagesCount = await Movie.getPagesCount();
 
-    res.status(201).send(toJSON({ movies, pagesCount }));
+    res
+      .status(201)
+      .send(toJSON({ movies, pagesCount, currentPage: page, currentTag: tag }));
   }
 
   async createMovie(req, res) {
