@@ -13,7 +13,14 @@ class MovieController {
 
     res
       .status(201)
-      .send(toJSON({ movies, pagesCount, currentPage: page, currentTag: tag }));
+      .send(
+        toJSON({
+          movies,
+          pagesCount,
+          currentPage: page | 1,
+          currentTag: tag | null,
+        })
+      );
   }
 
   async createMovie(req, res) {
