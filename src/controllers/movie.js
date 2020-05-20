@@ -9,7 +9,9 @@ class MovieController {
       page: req.query.page,
       tag: req.query.tag,
     });
-    const pagesCount = await Movie.getPagesCount();
+    const pagesCount = await Movie.getPagesCount({
+      tag: req.query.tag,
+    });
 
     res.status(201).send(
       toJSON({

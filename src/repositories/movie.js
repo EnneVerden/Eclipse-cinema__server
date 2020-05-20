@@ -15,10 +15,13 @@ class MovieRepository {
       .skip((page - 1) * this.moviesPerPage);
   }
 
-  getPagesCount() {
-    const moviesCount = Movie.countDocuments();
+  getAllMoviesByTag(searchData) {
+    const { tag } = searchData;
+    let tagsExp;
 
-    return moviesCount;
+    if (tag) tagsExp = { tags: { $in: tag } };
+
+    return Movie.find(tagsExp);
   }
 
   getMovie(searchData) {

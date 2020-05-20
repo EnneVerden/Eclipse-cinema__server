@@ -16,10 +16,11 @@ class MovieService {
     }
   }
 
-  async getPagesCount() {
-    const pagesCount = await Movie.getPagesCount();
+  async getPagesCount(searchData) {
+    const movies = await Movie.getAllMoviesByTag(searchData);
+    const pagesCount = Math.ceil(movies.length / this.moviesPerPage);
 
-    return Math.ceil(pagesCount / this.moviesPerPage);
+    return pagesCount !== 0 ? pagesCount : 1;
   }
 
   async createMovie(data) {
