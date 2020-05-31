@@ -5,7 +5,7 @@ const NotFoundError = require("../errors/not-found");
 const Schema = mongoose.Schema;
 
 const MovieSchema = new Schema({
-  name: {
+  movieName: {
     type: String,
     required: true,
   },

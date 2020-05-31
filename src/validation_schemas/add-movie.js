@@ -1,7 +1,7 @@
 const Joi = require("@hapi/joi");
 
 module.exports = Joi.object({
-  name: Joi.string().min(1).required(),
+  movieName: Joi.string().min(1).required(),
   poster: Joi.string().min(1).required(),
   description: Joi.string().min(1).required(),
   tags: Joi.array().items(Joi.string()).min(1).required(),
