@@ -23,7 +23,7 @@ class UserRepository {
 
   getUsersMovies() {
     return User.find({ tickets: { $exists: true, $ne: [] } })
-      .populate("tickets", "name poster startDate endDate")
+      .populate("tickets", "movieName poster startDate endDate")
       .select("email avatar tickets");
   }
 
