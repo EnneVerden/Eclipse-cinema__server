@@ -42,10 +42,10 @@ class UserService {
       await User.addUserMovie({ _id: user._id }, movie, user.balance);
 
       return movie;
-    } else if (data.deletedMovie) {
-      const movie = await Movie.getMovie({ _id: data.deletedMovie });
+    } else if (data.deletedMovieId) {
+      const movie = await Movie.getMovie({ _id: data.deletedMovieId });
 
-      if (!user.tickets.some((item) => item._id == data.deletedMovie)) {
+      if (!user.tickets.some((item) => item._id == data.deletedMovieId)) {
         throw new WrongDataError("You don't have this movie!");
       }
 
