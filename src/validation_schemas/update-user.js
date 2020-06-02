@@ -5,5 +5,5 @@ module.exports = Joi.object({
   fullName: Joi.string().min(1),
   password: Joi.string().min(6).max(30),
   movieId: Joi.string().min(1),
-  deletedMovie: Joi.string().min(1),
+  deletedMovieId: Joi.string().min(1),
 });
