@@ -29,9 +29,17 @@ class UserController {
   }
 
   async removeUsers(req, res) {
-    const users = await User.removeUsers();
+    const deletedUsersId = await User.removeUsers();
 
-    res.status(201).send(toJSON({ users }));
+    res.status(201).send(toJSON({ deletedUsersId }));
+  }
+
+  async removeUser(req, res) {
+    const deletedUserId = await User.removeUser({
+      deletedUserId: req.params.id,
+    });
+
+    res.status(201).send(toJSON({ deletedUserId }));
   }
 
   async replenishBalance(req, res) {

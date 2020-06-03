@@ -48,7 +48,11 @@ class UserRepository {
   }
 
   removeUsers() {
-    return User.remove({ accountStatus: "deletion" });
+    return User.deleteMany({ accountStatus: "deletion" });
+  }
+
+  removeUser(searchData) {
+    return User.deleteOne(searchData);
   }
 }
 

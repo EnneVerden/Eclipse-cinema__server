@@ -1,12 +1,10 @@
 const UserRepository = require("../repositories/user");
 const MovieRepository = require("../repositories/movie");
-const DeletedUserRepository = require("../repositories/deletedUser");
 const Hash = require("../classes/hash");
 const WrongDataError = require("../errors/wrong-data");
 
 const User = new UserRepository();
 const Movie = new MovieRepository();
-const DeletedUser = new DeletedUserRepository();
 const hash = new Hash().hash;
 const compare = new Hash().compare;
 
@@ -84,12 +82,25 @@ class UserService {
       accountStatus: "deletion",
     });
 
-    await DeletedUser.saveDeletedUsers(deletedUsers);
     await User.removeUsers();
 
     const deletedUsersId = deletedUsers.map((delUser) => delUser._id);
 
     return deletedUsersId;
+  }
+
+  async removeUser(searchData) {
+    const deletedUser = await User.getDeletedUsers({
+      accountStatus: "deletion",
+      _id: searchData.deletedUserId,
+    });
+
+    await User.removeUser({
+      accountStatus: "deletion",
+      _id: searchData.deletedUserId,
+    });
+
+    return deletedUser[0]._id;
   }
 
   async replenishBalance(user) {

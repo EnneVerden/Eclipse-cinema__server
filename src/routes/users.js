@@ -24,5 +24,6 @@ router.patch(
 router.patch("/replenish", errorCatcher(User.replenishBalance));
 router.delete("/", errorCatcher(User.sendRemoveRequest));
 router.delete("/all", isAdmin, errorCatcher(User.removeUsers));
+router.delete("/:id", isAdmin, errorCatcher(User.removeUser));
 
 module.exports = router;
