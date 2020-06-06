@@ -30,9 +30,7 @@ class UserRepository {
   updateUser(searchData, dataForUpdating) {
     return User.findOneAndUpdate(searchData, dataForUpdating, {
       new: true,
-      fields: Object.keys(dataForUpdating).filter(
-        (field) => field !== "password"
-      ),
+      fields: Object.keys(dataForUpdating),
     }).select({ _id: 0 });
   }
 

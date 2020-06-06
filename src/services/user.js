@@ -50,16 +50,33 @@ class UserService {
       await User.removeUserMovie({ _id: user._id }, movie._id);
 
       return movie;
-    } else if (data.password) {
-      const result = await compare(data.password, user.password);
-
-      if (result) {
-        delete data.password;
-      } else {
-        data.password = await hash(data.password);
+    } else if (data.newPassword && data.oldPassword) {
+      if (!data.oldPassword || !data.newPassword) {
+        throw new WrongDataError("Enter data to change!");
       }
 
-      return await User.updateUser({ _id: user._id }, data);
+      const result = await compare(data.oldPassword, user.password);
+
+      if (result) {
+        const newPassword = await hash(data.newPassword);
+        await User.updateUser({ _id: user._id }, { password: newPassword });
+
+        return { password: true };
+      } else {
+        throw new WrongDataError("Old password is incorrect!");
+      }
+    } else {
+      if (!data.oldPassword) {
+        throw new WrongDataError("Old password is incorrect!");
+      }
+
+      const result = await compare(data.oldPassword, user.password);
+
+      if (result) {
+        return await User.updateUser({ _id: user._id }, data);
+      } else {
+        throw new WrongDataError("Old password is incorrect!");
+      }
     }
   }
 
