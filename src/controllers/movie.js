@@ -38,7 +38,7 @@ class MovieController {
   async removeMovie(req, res) {
     await Movie.removeMovieById(req.params.id);
 
-    res.status(201).send(toJSON({ deletedMovieID: req.params.id }));
+    res.status(201).send(toJSON({ deletedMovieId: req.params.id }));
   }
 }
 
