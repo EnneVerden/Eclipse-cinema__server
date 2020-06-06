@@ -4,7 +4,12 @@ class MovieRepository {
   moviesPerPage = 12;
 
   getMovies(searchData) {
-    const { page = 1, tag } = searchData;
+    if (!searchData) {
+      return Movie.find().populate("tags", { __v: 0 });
+    }
+
+    const { page, tag } = searchData;
+
     let tagsExp;
 
     if (tag) tagsExp = { tags: { $in: tag } };

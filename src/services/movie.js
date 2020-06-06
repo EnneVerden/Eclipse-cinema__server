@@ -11,8 +11,10 @@ class MovieService {
 
     if (tag) {
       return await Movie.getMovies({ page, tag });
-    } else {
+    } else if (page) {
       return await Movie.getMovies({ page });
+    } else {
+      return await Movie.getMovies();
     }
   }
 
