@@ -25,8 +25,12 @@ class MovieService {
     return pagesCount !== 0 ? pagesCount : 1;
   }
 
-  async createMovie(data) {
-    return await Movie.createMovie(data);
+  async createMovie(data, imagePath) {
+    return await Movie.createMovie({
+      ...data,
+      tags: JSON.parse(data.tags),
+      poster: imagePath,
+    });
   }
 
   async updateMovieById(id, data) {

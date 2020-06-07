@@ -24,7 +24,7 @@ class MovieController {
   }
 
   async createMovie(req, res) {
-    const movie = await Movie.createMovie(req.body);
+    const movie = await Movie.createMovie(req.body, req.file.path);
 
     res.status(201).send(toJSON({ movie }));
   }

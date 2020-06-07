@@ -7,6 +7,7 @@ const validator = require("../middleware/validator");
 const validationSchema = require("../validation_schemas");
 const uploader = require("../middleware/uploader");
 const resizer = require("../middleware/resizer");
+const cloudinary = require("../middleware/cloudinary");
 
 const Movie = new MovieController();
 
@@ -20,7 +21,7 @@ router.post(
   isAuth,
   isAdmin,
   uploader("poster"),
-  resizer("posters"),
+  cloudinary("posters"),
   validator({ body: validationSchema.addMovies }),
   errorCatcher(Movie.createMovie)
 );
