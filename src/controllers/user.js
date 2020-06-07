@@ -17,7 +17,11 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    const userInfo = await User.updateUser(req.user, req.body);
+    const userInfo = await User.updateUser(
+      req.user,
+      req.body,
+      req.file ? req.file.path : null
+    );
 
     res.status(201).send(toJSON({ userInfo }));
   }

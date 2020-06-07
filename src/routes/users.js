@@ -7,6 +7,7 @@ const validator = require("../middleware/validator");
 const validationSchema = require("../validation_schemas");
 const uploader = require("../middleware/uploader");
 const resizer = require("../middleware/resizer");
+const cloudinary = require("../middleware/cloudinary");
 
 const User = new UserController();
 
@@ -17,7 +18,7 @@ router.get("/orders", isAdmin, errorCatcher(User.getUsersMovies));
 router.patch(
   "/",
   uploader("avatar"),
-  resizer("avatars"),
+  cloudinary("avatars"),
   validator({ body: validationSchema.updateUser }),
   errorCatcher(User.updateUser)
 );

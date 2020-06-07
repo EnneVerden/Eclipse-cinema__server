@@ -25,8 +25,12 @@ class UserService {
     return await User.getUsersMovies();
   }
 
-  async updateUser(user, data) {
-    if (data.movieId) {
+  async updateUser(user, data, avatarPath) {
+    if (avatarPath !== null) {
+      await User.updateUser({ _id: user._id }, { avatar: avatarPath });
+
+      return { avatar: avatarPath };
+    } else if (data.movieId) {
       const movie = await Movie.getMovie({ _id: data.movieId });
 
       if (user.tickets.some((item) => item._id == data.movieId)) {
