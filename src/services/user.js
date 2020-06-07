@@ -70,7 +70,10 @@ class UserService {
         throw new WrongDataError("Old password is incorrect!");
       }
     } else {
-      const result = await compare((data.oldPassword = "none"), user.password);
+      const result = await compare(
+        data.oldPassword ? data.oldPassword : "none",
+        user.password
+      );
 
       if (result) {
         return await User.updateUser({ _id: user._id }, data);
