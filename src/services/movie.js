@@ -26,11 +26,13 @@ class MovieService {
   }
 
   async createMovie(data, imagePath) {
-    return await Movie.createMovie({
+    const movie = await Movie.createMovie({
       ...data,
       tags: JSON.parse(data.tags),
       poster: imagePath,
     });
+
+    return Movie.getMovie({ _id: movie._id });
   }
 
   async updateMovieById(id, data) {
