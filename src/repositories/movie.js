@@ -8,11 +8,22 @@ class MovieRepository {
       return Movie.find().populate("tags", { __v: 0 });
     }
 
-    const { page, tag } = searchData;
+    const { page, tag, movieName } = searchData;
 
     let tagsExp;
 
-    if (tag) tagsExp = { tags: { $in: tag } };
+    if (tag && movieName) {
+      tagsExp = {
+        tags: { $in: tag },
+        $or: [{ movieName: { $regex: searchData.movieName, $options: "i" } }],
+      };
+    }
+    if (movieName && !tag) {
+      tagsExp = {
+        $or: [{ movieName: { $regex: searchData.movieName, $options: "i" } }],
+      };
+    }
+    if (tag && !movieName) tagsExp = { tags: { $in: tag } };
 
     return Movie.find(tagsExp, { __v: 0 })
       .populate("tags", { __v: 0 })

@@ -6,16 +6,17 @@ class MovieService {
   moviesPerPage = 12;
 
   async getMovies(data) {
-    const { page } = data;
+    const { page = 1, movieName } = data;
     let { tag } = data;
 
-    if (tag) {
-      return await Movie.getMovies({ page, tag });
-    } else if (page) {
-      return await Movie.getMovies({ page });
-    } else {
-      return await Movie.getMovies();
+    if (movieName && tag) {
+      return await Movie.getMovies({ movieName, page, tag });
     }
+    if (movieName) return await Movie.getMovies({ movieName, page });
+    if (tag) return await Movie.getMovies({ page, tag });
+    if (page) return await Movie.getMovies({ page });
+
+    return await Movie.getMovies();
   }
 
   async getPagesCount(searchData) {
