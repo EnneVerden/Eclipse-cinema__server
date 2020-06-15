@@ -6,7 +6,7 @@ const Movie = new MovieService();
 class MovieController {
   async getMovies(req, res) {
     const movies = await Movie.getMovies({
-      movieName: req.body.movieName,
+      movieName: req.query.movieName,
       page: req.query.page,
       tag: req.query.tag,
     });
