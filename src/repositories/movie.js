@@ -8,26 +8,11 @@ class MovieRepository {
       return Movie.find().populate("tags", { __v: 0 });
     }
 
-    const { page, tag, movieName } = searchData;
+    const { page, tag } = searchData;
 
     let tagsExp;
 
-    if (tag && movieName) {
-      tagsExp = {
-        tags: { $in: tag },
-        $or: [{ movieName: { $regex: searchData.movieName, $options: "i" } }],
-      };
-    }
-    if (movieName && !tag) {
-      tagsExp = {
-        $or: [{ movieName: { $regex: searchData.movieName, $options: "i" } }],
-      };
-    }
-    if (tag && !movieName) tagsExp = { tags: { $in: tag } };
-
-    if (movieName) {
-      return Movie.findOne(tagsExp, { __v: 0 }).populate("tags", { __v: 0 });
-    }
+    if (tag) tagsExp = { tags: { $in: tag } };
 
     return Movie.find(tagsExp, { __v: 0 })
       .populate("tags", { __v: 0 })
@@ -45,6 +30,17 @@ class MovieRepository {
   }
 
   getMovie(searchData) {
+    const { movieName } = searchData;
+
+    if (movieName) {
+      return Movie.findOne(
+        {
+          $or: [{ movieName: { $regex: searchData.movieName, $options: "i" } }],
+        },
+        { __v: 0 }
+      ).populate("tags", { __v: 0 });
+    }
+
     return Movie.findOne(searchData, { __v: 0 }).populate("tags", { __v: 0 });
   }
 
