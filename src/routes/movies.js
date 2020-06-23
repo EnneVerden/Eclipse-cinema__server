@@ -30,7 +30,7 @@ router.patch(
   isAuth,
   isAdmin,
   uploader("poster"),
-  resizer("posters"),
+  cloudinary("posters"),
   validator({ body: validationSchema.updateMovie }),
   errorCatcher(Movie.updateMovie)
 );

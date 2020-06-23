@@ -40,8 +40,8 @@ class MovieService {
     return Movie.getMovie({ _id: movie._id });
   }
 
-  async updateMovieById(id, data) {
-    return await Movie.updateMovie({ _id: id }, data);
+  async updateMovieById(id, data, imagePath) {
+    return await Movie.updateMovie({ _id: id }, { ...data, poster: imagePath });
   }
 
   async removeMovieById(id) {

@@ -7,7 +7,6 @@ const dataUri = new DataUri();
 module.exports = (folder) => async (req, res, next) => {
   try {
     if (req.body.movieName) {
-      console.log(req.body);
       const image = dataUri.format(".png", req.file.buffer).content;
 
       const result = await cloudinary.uploader.upload(image, {

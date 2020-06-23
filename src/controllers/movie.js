@@ -43,7 +43,11 @@ class MovieController {
   }
 
   async updateMovie(req, res) {
-    const movieInfo = await Movie.updateMovieById(req.params.id, req.body);
+    const movieInfo = await Movie.updateMovieById(
+      req.params.id,
+      req.body,
+      req.file.path
+    );
 
     res.status(201).send(toJSON({ movie: movieInfo }));
   }
