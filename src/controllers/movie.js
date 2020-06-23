@@ -12,7 +12,9 @@ class MovieController {
         movieName: req.query.movieName,
       });
 
-      movies = [...movies, movie];
+      if (movie !== null) {
+        movies = [...movies, movie];
+      }
     } else {
       movies = await Movie.getMovies({
         page: req.query.page,
