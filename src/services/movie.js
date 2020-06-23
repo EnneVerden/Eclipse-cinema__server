@@ -6,7 +6,7 @@ class MovieService {
   moviesPerPage = 12;
 
   async getMovies(data) {
-    const { page = 1 } = data;
+    const { page } = data;
     let { tag } = data;
 
     if (tag) return await Movie.getMovies({ page, tag });

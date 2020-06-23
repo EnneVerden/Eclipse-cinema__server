@@ -8,7 +8,7 @@ class MovieRepository {
       return Movie.find().populate("tags", { __v: 0 });
     }
 
-    const { page, tag } = searchData;
+    const { page = 1, tag } = searchData;
 
     let tagsExp;
 
