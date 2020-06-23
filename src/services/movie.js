@@ -42,10 +42,7 @@ class MovieService {
 
   async updateMovieById(id, data, imagePath) {
     if (imagePath) {
-      return await Movie.updateMovie(
-        { _id: id },
-        { ...data, tags: JSON.parse(data.tags), poster: imagePath }
-      );
+      return await Movie.updateMovie({ _id: id }, { poster: imagePath });
     }
 
     return await Movie.updateMovie({ _id: id }, data);

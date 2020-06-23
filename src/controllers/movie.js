@@ -46,11 +46,7 @@ class MovieController {
     let movieInfo = null;
 
     if (req.file) {
-      movieInfo = await Movie.updateMovieById(
-        req.params.id,
-        req.body,
-        req.file.path
-      );
+      movieInfo = await Movie.updateMovieById(req.params.id, req.file.path);
     } else {
       movieInfo = await Movie.updateMovieById(req.params.id, req.body);
     }
