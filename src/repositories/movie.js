@@ -55,8 +55,7 @@ class MovieRepository {
   updateMovie(searchData, dataForUpdating) {
     return Movie.findOneAndUpdate(searchData, dataForUpdating, {
       new: true,
-      fields: Object.keys(dataForUpdating),
-    }).exec();
+    }).select({ __v: 0 });
   }
 
   removeMovie(searchData) {
