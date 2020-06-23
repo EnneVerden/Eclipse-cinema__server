@@ -25,6 +25,10 @@ class MovieRepository {
     }
     if (tag && !movieName) tagsExp = { tags: { $in: tag } };
 
+    if (movieName) {
+      return Movie.findOne(tagsExp, { __v: 0 }).populate("tags", { __v: 0 });
+    }
+
     return Movie.find(tagsExp, { __v: 0 })
       .populate("tags", { __v: 0 })
       .limit(this.moviesPerPage)

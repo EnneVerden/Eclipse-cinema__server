@@ -9,10 +9,10 @@ class MovieService {
     const { page = 1, movieName } = data;
     let { tag } = data;
 
-    if (movieName && tag) {
+    if (movieName.length && tag) {
       return await Movie.getMovies({ movieName, page, tag });
     }
-    if (movieName) return await Movie.getMovies({ movieName, page });
+    if (movieName.length) return await Movie.getMovies({ movieName, page });
     if (tag) return await Movie.getMovies({ page, tag });
     if (page) return await Movie.getMovies({ page });
 
