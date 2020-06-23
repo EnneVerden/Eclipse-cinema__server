@@ -5,10 +5,14 @@ const Movie = new MovieService();
 
 class MovieController {
   async getMovies(req, res) {
-    let movies;
+    let movies = [];
 
     if (req.query.movieName) {
-      movies = await Movie.getMovieByName({ movieName: req.query.movieName });
+      const movie = await Movie.getMovieByName({
+        movieName: req.query.movieName,
+      });
+
+      movies = [...movies, movie];
     } else {
       movies = await Movie.getMovies({
         page: req.query.page,
