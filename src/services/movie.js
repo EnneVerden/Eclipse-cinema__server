@@ -41,7 +41,14 @@ class MovieService {
   }
 
   async updateMovieById(id, data, imagePath) {
-    return await Movie.updateMovie({ _id: id }, { ...data, poster: imagePath });
+    if (imagePath) {
+      return await Movie.updateMovie(
+        { _id: id },
+        { ...data, poster: imagePath }
+      );
+    }
+
+    return await Movie.updateMovie({ _id: id }, data);
   }
 
   async removeMovieById(id) {
