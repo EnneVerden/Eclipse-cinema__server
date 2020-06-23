@@ -44,7 +44,7 @@ class MovieService {
     if (imagePath) {
       return await Movie.updateMovie(
         { _id: id },
-        { ...data, poster: imagePath }
+        { ...data, tags: JSON.parse(data.tags), poster: imagePath }
       );
     }
 
