@@ -55,7 +55,9 @@ class MovieRepository {
   updateMovie(searchData, dataForUpdating) {
     return Movie.findOneAndUpdate(searchData, dataForUpdating, {
       new: true,
-    }).select({ __v: 0 });
+    })
+      .populate("tags", { __v: 0 })
+      .select({ __v: 0 });
   }
 
   removeMovie(searchData) {
